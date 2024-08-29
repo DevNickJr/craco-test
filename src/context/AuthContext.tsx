@@ -1,19 +1,26 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+interface IUser {
+  name: string;
+  accessToken: string;
+}
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: { name: string } | null;
-  login: (name: string) => void;
+  user: IUser | null;
+  login: (data: IUser) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthPovider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [user, setUser] = useState<{
+    name: string;
+    accessToken: string;
+  } | null>(null);
 
-  const login = (name: string) => {
-    setUser({ name });
+  const login = (data: IUser) => {
+    setUser(data);
   };
 
   const logout = () => {
